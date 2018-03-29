@@ -4,11 +4,9 @@ Man kan skapa array med både `array()` och `[]`:
 
 Ett objekt i PHP är en _Associative Array_
 
-css:
-    echo "<h1 style='color:red'>Red red wine</h1>";
-    echo "<h1 class='title'>Green grass and high tides </h1>";
 
-++ Skriva ut arrayer snyggt i PHP 
+
++ Skriva ut arrayer snyggt i PHP 
 
 ```<?php
 $values = [10,20,30];
@@ -21,7 +19,7 @@ echo pretty($values);
 ```
 
 
-++ Functions
++ Functions
 
 ```<?php
 $my_value = 10;
