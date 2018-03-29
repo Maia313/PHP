@@ -8,7 +8,8 @@ Ett objekt i PHP är en _Associative Array_
 
 + Skriva ut arrayer snyggt i PHP 
 
-```<?php
+```
+<?php
 $values = [10,20,30];
 
 function pretty($array){
