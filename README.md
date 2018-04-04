@@ -87,3 +87,66 @@ However, because the variables are displayed in the URL, it is possible to bookm
 ?>
 ```
 
+### Session Variables
+
+Another page can be created that can access the session variables we set in the previous page: 
+
+```
+<?php
+  // Start the session
+  session_start();
+?>
+<!DOCTYPE html>
+<html>
+  <body>
+    <?php
+      echo "Your name is " . $_SESSION['name'];
+      // Outputs "Your name is John"
+    ?>
+  </body>
+</html>
+```
+
+
+### Cookies
+
+The following example creates a cookie named "user" with the value "John". The cookie will expire after 30 days, which is written as 86,400 * 30, in which 86,400 seconds = one day. The '/' means that the cookie is available throughout the entire website.
+
+We then retrieve the value of the cookie "user" (using the global variable $_COOKIE). We also use the isset() function to find out if the cookie is set: 
+
+```
+<?php
+    $value = "John";
+    setcookie("user", $value, time() + (86400 * 30), '/'); 
+
+    if(isset($_COOKIE['user'])) {
+      echo "Value is: ". $_COOKIE['user'];
+    }
+    //Outputs "Value is: John"
+?>
+
+```
+
+### Appending to a File
+
+Let's create an example of a form that adds filled-in data to a file.
+
+```
+<?php
+if(isset($_POST['text'])) {
+  $name = $_POST['text'];
+  $handle = fopen('names.txt', 'a');
+  fwrite($handle, $name."\n");
+  fclose($handle); 
+}
+?>
+<form method="post">
+  Name: <input type="text" name="text" /> 
+  <input type="submit" name="submit" />
+</form>
+```
+
+Now, each time a name is entered and submitted, it's added to the "names.txt" file, along with a new line.
+
+The isset() function determined whether the form had been submitted, as well as whether the text contained a value.
+We did not specify an action attribute for the form, so it will submit to itself.
