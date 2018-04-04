@@ -80,9 +80,10 @@ However, because the variables are displayed in the URL, it is possible to bookm
 
 #### actionGet.php 
 
-```<?php
-      echo "Hi ".$_GET['name'].". ";
-      echo "You are ".$_GET['age']." years old.";
-   ?>
+```
+<?php
+   echo "Hi ".$_GET['name'].". ";
+   echo "You are ".$_GET['age']." years old.";
+?>
 ```
 
