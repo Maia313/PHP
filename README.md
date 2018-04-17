@@ -6,7 +6,7 @@ Ett objekt i PHP är en _Associative Array_
 
 
 
-+ Skriva ut arrayer snyggt i PHP 
+### Skriva ut arrayer snyggt i PHP 
 
 ```
 <?php
@@ -20,7 +20,7 @@ echo pretty($values);
 ```
 
 
-+ Functions
+### Functions
 
 ```<?php
 $my_value = 10;
@@ -40,7 +40,7 @@ echo $add_numbers_anon(10,10);
 ```
 
 
-+ Strict types
+### Strict types
 
 ```<?php
 declare(strict_types=1);
@@ -55,7 +55,7 @@ function pretty($array){
 ```
 
 
-+ Api call
+### Api call
 
 ```<?php
 $response = file_get_contents('YOUR URL TO API');
