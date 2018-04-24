@@ -8,7 +8,7 @@ Ett objekt i PHP är en _Associative Array_
 
 ### Skriva ut arrayer snyggt i PHP 
 
-```
+```php
 <?php
 $values = [10,20,30];
 
@@ -22,7 +22,8 @@ echo pretty($values);
 
 ### Functions
 
-```<?php
+```php
+<?php
 $my_value = 10;
 
 function add_numbers($a, $b){
@@ -42,7 +43,8 @@ echo $add_numbers_anon(10,10);
 
 ### Strict types
 
-```<?php
+```php
+<?php
 declare(strict_types=1);
 
 function add_numbers(int $first_number, int $second_number): int {
@@ -57,7 +59,8 @@ function pretty($array){
 
 ### Api call
 
-```<?php
+```php
+<?php
 $response = file_get_contents('YOUR URL TO API');
 $json_data = json_decode($response, true);
 var_dump($json_data);
@@ -70,7 +73,7 @@ However, because the variables are displayed in the URL, it is possible to bookm
 
 #### For example:
 
-```
+```php
 <form action="actionGet.php" method="get">
   Name: <input type="text" name="name" /><br /><br />
   Age: <input type="text" name="age" /><br /><br />
@@ -80,7 +83,7 @@ However, because the variables are displayed in the URL, it is possible to bookm
 
 #### actionGet.php 
 
-```
+```php
 <?php
    echo "Hi ".$_GET['name'].". ";
    echo "You are ".$_GET['age']." years old.";
@@ -91,7 +94,7 @@ However, because the variables are displayed in the URL, it is possible to bookm
 
 Another page can be created that can access the session variables we set in the previous page: 
 
-```
+```php
 <?php
   // Start the session
   session_start();
@@ -114,7 +117,7 @@ The following example creates a cookie named "user" with the value "John". The c
 
 We then retrieve the value of the cookie "user" (using the global variable $_COOKIE). We also use the isset() function to find out if the cookie is set: 
 
-```
+```php
 <?php
     $value = "John";
     setcookie("user", $value, time() + (86400 * 30), '/'); 
@@ -131,7 +134,7 @@ We then retrieve the value of the cookie "user" (using the global variable $_COO
 
 Let's create an example of a form that adds filled-in data to a file.
 
-```
+```php
 <?php
 if(isset($_POST['text'])) {
   $name = $_POST['text'];
