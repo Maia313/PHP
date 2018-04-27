@@ -4,7 +4,7 @@ Man kan skapa array med både `array()` och `[]`:
 
 Ett objekt i PHP är en _Associative Array_
 
---
+---
 
 ### Skriva ut arrayer snyggt i PHP 
 
@@ -18,7 +18,7 @@ function pretty($array){
 
 echo pretty($values);
 ```
-
+---
 
 ### Functions
 
@@ -39,7 +39,7 @@ $add_numbers_anon = function($a, $b){
 add_numbers(10, 10);
 echo $add_numbers_anon(10,10);
 ```
-
+---
 
 ### Strict types
 
@@ -55,7 +55,7 @@ function pretty($array){
   return highlight_string("<?php\n\$data =\n" . var_export($array, true) . ";\n?>");
 }
 ```
-
+---
 
 ### Api call
 
@@ -65,11 +65,14 @@ $response = file_get_contents('YOUR URL TO API');
 $json_data = json_decode($response, true);
 var_dump($json_data);
 ```
+---
 
 ### GET
 
 Information sent via a form using the GET method is visible to everyone (all variable names and values are displayed in the URL). GET also sets limits on the amount of information that can be sent - about 2000 characters.
 However, because the variables are displayed in the URL, it is possible to bookmark the page, which can be useful in some situations.
+
+---
 
 #### For example:
 
@@ -80,6 +83,7 @@ However, because the variables are displayed in the URL, it is possible to bookm
   <input type="submit" name="submit" value="Submit" />
 </form>
 ```
+---
 
 #### actionGet.php 
 
@@ -89,6 +93,7 @@ However, because the variables are displayed in the URL, it is possible to bookm
    echo "You are ".$_GET['age']." years old.";
 ?>
 ```
+---
 
 ### Session Variables
 
@@ -109,7 +114,7 @@ Another page can be created that can access the session variables we set in the 
   </body>
 </html>
 ```
-
+---
 
 ### Cookies
 
@@ -129,6 +134,8 @@ We then retrieve the value of the cookie "user" (using the global variable $_COO
 ?>
 
 ```
+
+---
 
 ### Appending to a File
 
