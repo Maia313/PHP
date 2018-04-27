@@ -4,7 +4,7 @@ Man kan skapa array med både `array()` och `[]`:
 
 Ett objekt i PHP är en _Associative Array_
 
-
+--
 
 ### Skriva ut arrayer snyggt i PHP 
 
