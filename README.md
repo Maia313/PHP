@@ -153,3 +153,15 @@ Now, each time a name is entered and submitted, it's added to the "names.txt" fi
 
 The isset() function determined whether the form had been submitted, as well as whether the text contained a value.
 We did not specify an action attribute for the form, so it will submit to itself.
+
+---
+```php
+$app->get('/books', function ($request, $response, $args) {
+    $getAll = $this->db->prepare("SELECT * FROM books");
+    $getAll->execute();
+    $allBooks = $getAll->fetchAll();
+    return $response->withJson($allBooks);
+});
+ 
+
+
