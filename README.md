@@ -6,7 +6,7 @@ Ett objekt i PHP är en _Associative Array_
 
 ---
 
-### Skriva ut arrayer snyggt i PHP 
+### Skriva ut arrayer i PHP 
 
 ```php
 <?php
