@@ -1,0 +1,315 @@
+<html>
+<head>
+  <base href="https://jesperorb.github.io/revealjs/">
+  <!-- <base href="file:///Users/jesperorb/projects/revealjs/"> -->
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/theme/default.css">
+  <link rel="stylesheet" type="text/css" href="lib/prismjs/prism.css">
+  <link rel="stylesheet" type="text/css" href="lib/css/base16-oceanicnext.dark.css">
+  <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+  <meta name="description" content="PHP Basics">
+  <meta name="author" content="jesperorb">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <title> PHP Basics </title>
+  <script>
+  var link = document.createElement( 'link' );
+  link.rel = 'stylesheet';
+  link.type = 'text/css';
+  link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+  document.getElementsByTagName( 'head' )[0].appendChild( link );
+</script>
+<style type="text/css">
+    #php{
+      font-size: 10rem;
+    }
+    #p{
+      display: inline-block; 
+      transition: all 300ms ease;
+    }
+    .rotate{
+      display: inline-block;
+      transition: all 300ms ease;
+      transform: rotate(30deg);
+      cursor: pointer;
+    }
+    .rotate:before{
+      position: absolute;
+      right: 100px;
+      top: 50%;
+      content: "UUUHHHHHRRRRRRRRRRRUUUUUUUHHHHHHH!";
+      font-size: 2rem;
+      background-color: #90708c;
+      color: #eadfdf;
+      padding: 0.5rem;
+    }
+  pre[class*="language-"]{
+    margin: 3rem auto;
+  }
+</style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <section>
+        <section>
+          <h1><strong>PHP</strong></h1>
+          <p>Personal Home Page</p>
+        </section>
+      </section>
+      <section>
+        <section>
+          <h1 id="php"><span id="p">P</span>HP</h1>
+          <a href="http://7php.com/elephpant/#gtgt_You_are_the_original_designer_of_the_elePHPant_logo_Everyone_ask_how_you_created_it_but_you_answered_it_already_in_your_movie" class="reference">Ref: 7php - Why Elephant?</a>
+          <img class="fragment fade-down" src="https://commons.wikimedia.org/wiki/File:Webysther_20160423_-_Elephpant.svg" alt="PHP Elephant">
+          <script>
+            document.getElementById('php').addEventListener('mouseover', function(){
+              document.getElementById('p').classList.add('rotate');
+            });
+            document.getElementById('php').addEventListener('mouseout', function(){
+              document.getElementById('p').classList.remove('rotate');
+            });
+          </script>
+        </section>
+        <section>
+          <p><em>Måste jag...?</em></p>
+          <p>Om din fil bara innehåller <strong>PHP</strong> behöver du inte en sluttagg</p>
+          <p class="fragment fade-down">Om din fil innehåller både <strong>PHP</strong> och <em>HTML</em> måste du använda sluttagg</p>
+          <pre class="fragment fade-down"><code class="language-js">&lt;? ?&gt; == &lt;?php ?&gt;</code></pre>
+          <p class="fragment fade-down">Använd inte shorthand utan <code><em>php</em></code></p>
+          <p class="fragment fade-down"><em>Använd alltid semikolon;</em></p>
+        </section>
+        <section>
+          <p><em>Casting</em></p>
+          <pre><code class="language-php">&lt;?php
+$money = &#039;30&#039;;         //type: string
+$cash = (int)$money;   //type: int</code></pre>
+        </section>
+        <section>
+          <p><em>Casting</em></p>
+          <ul>
+            <li><em><code>(int), (integer)</code></em>    - cast to integer</li>
+            <li class="fragment fade-down"><code><em>(bool), (boolean)</em></code> - cast to boolean</li>
+            <li class="fragment fade-down"><em><code>(float), (double), (real)</code></em> - cast to float</li>
+            <li class="fragment fade-down"><em><code>(string)</code> </em>- cast to string</li>
+            <li class="fragment fade-down"><em><code>(array)</code></em> - cast to array</li>
+            <li class="fragment fade-down"><em><code>(object)</code></em> - cast to object</li>
+            <li class="fragment fade-down"><em><code>(unset)</code></em> cast to NULL</li>
+          </ul>
+          <a href="http://php.net/manual/en/language.types.type-juggling.php" class="reference">Ref: PHP.net - Type Juggling</a>
+        </section>
+        <section>
+          <pre><code class="language-php">&lt;?php
+$foo = 1 + &quot;Whaddup10&quot;;     // $foo is 1 (int)
+$foo = 1 + &quot;10Waddups&quot;;     // $foo is 11 (int)
+$foo = 1 + &quot;10.5Waddups&quot;;   // $foo is 11.5 (float)
+$foo = &quot;10.5Waddups&quot; + 1;   // $foo is 11.5 (float)</code></pre>
+        <p>Strängar castas till float/int <strong>om första karaktären är en siffra</strong> annars ignoreras strängen.</p>
+        <p>🤔</p>
+        <a href="http://php.net/manual/en/language.types.string.php#language.types.string.conversion" class="reference">Ref: PHP.net: String conversion</a>
+
+        </section>
+        <section>
+          <p><em>“‘′″'"QUOTES?!"'″′’”</em></p>
+          <p>Single & double quotes matter</p>
+          <pre><code class="language-php">&lt;?php
+$first = "Jesper";
+$last = "Orb";
+$full = "$first $last";                  //It works
+$full_with_double = &quot;{$first} {$last}&quot;;    //It works
+$full_with_single = &#039;{$first} {$last}&#039;;    //Does not work
+$plural = "{$full}s"; //Jesper Orbs</code></pre>
+        </section>
+        <section>
+          <p><strong>JavaScript</strong>: <code>console.log();</code></p>
+          <p class="fragment fade-down"><em>PHP</em>:  <code>var_dump();</code></p>
+          <p class="fragment fade-down">Om inget syns, lägg till detta i början på filen</p>
+          <pre class="fragment fade-down"><code class="language-php">ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);</code></pre>
+        <a href="http://stackoverflow.com/questions/1053424/how-do-i-get-php-errors-to-display" class="reference">Ref: SO - How To Display Errors</a>
+        </section>
+        <section>
+          <p class="fragment fade-down">Ibland jobbar man med mycket data.</p>
+          <pre class="fragment fade-down"><code class="language-js">&lt;?php
+$huge = 100000000000000;
+die(var_dump($huge)); //I just took a huge dump and died :O</code></pre>
+          <p class="fragment fade-down"><code><em>die();</em></code> dödar processen, tillåter inte att scriptet fortsätter.</p>
+        </section>
+        <section>
+          <p><em>Key/value</em></p>
+          <pre><code class="language-php">&lt;?php
+$assoc = array(
+  "key" => "value"
+);</code></pre>
+<pre><code class="language-php">&lt;?php
+$person = array(
+  "name" => "Jesper",
+  "age" => "infinite"
+);</code></pre>
+        <p class="fragment fade-down">Separeras med <strong>=></strong> istället för <em>:</em></p>
+        <a href="http://php.net/manual/en/language.types.array.php" class="reference">Ref: Arrays</a>
+        </section>
+        <section>
+          <p><strong>foreach associative</strong></p>
+          <pre><code class="language-php">&lt;?php
+$panda = array(
+  "name" => "Panda",
+  "weight" => "3000"
+);
+foreach($panda as $key => $value){
+  echo $key . $value;
+}</code></pre>
+        <p class="fragment fade-down">Vi kan använda oss utav både <em>key</em> och <em>value</em> om vi vill.</p>
+        </section>
+      </section>
+      <section>
+        <section>
+          <h1><code><em>functions</em></code></h1>
+        </section>
+        <section>
+          <p>En funktion skrivs med nyckelorde <code><em>function</em></code></p>
+          <pre><code class="language-php">function add_numbers($first_number, $secondNumber){
+  return $first_number + $second_number;
+}
+
+echo add_numbers(10,10);</code></pre>
+          <p class="fragment fade-down">En funktion behöver inte kallas på eller ha <code><em>$</em></code> i namnet</p>
+        </section>
+        <section>
+          <p><em>Function expression</em></p>
+          <p>Undantaget är om man skriver funktioner "som i JavaScript"</p>
+          <pre><code class="language-php">$add_numbers = function($first_number , $second_number){
+  return $first_number  + $second_number;
+};
+
+echo $add_numbers(10,10);</code></pre>
+        </section>
+        <section>
+          <p><em>Scope</em></p>
+          <p>Funktioner har <strong>inte</strong> tillgång till det yttre scopet</p>
+          <pre><code class="language-php">$sum_all_values = 10;
+function add_numbers($first_number , $second_number){
+  $sum_all_values += $first_number + $second_number;
+  return $first_number  + $second_number;
+};
+
+add_numbers(10,10);
+echo $sum_all_values;
+</code></pre>
+        </section>
+        <section>
+          <p>Berätta för funktionen att du vill använda den globala variablen</p>
+          <pre><code class="language-php">$sum_all_values = 10;
+function add_numbers($first_number , $second_number){
+  global $sum_all_values;
+  $sum_all_values += $first_number + $second_number;
+  return $first_number  + $second_number;
+};
+
+add_numbers(10,10);
+echo $sum_all_values;
+</code></pre>
+        </section>
+        <section>
+          <p><em><code>use</code></em></p>
+          <p><code><em>use</em></code> använd bara i kombination med anonyma funktioner och tillåter funktionen att komma åt en variabel i det yttre scopet</p>
+          <pre><code class="language-php">$sum_all_values = 10;
+$add_numbers = function ($first_number , $second_number) use ($sum_all_values){
+  $sum_all_values += $first_number + $second_number;
+  return $first_number  + $second_number;
+};
+</code></pre>
+        <p class="fragment fade-down">Kan bara användas med function expression, använder du en funktion "som vanligt" så får du använda <code><em>global</em></code></p>
+        </section>
+        <section>
+          <p><em>Scalar Type Hints</em></p>
+          <p>Det finns inbyggt strikt typning i PHP </p>
+          <pre><code class="language-php">function add_numbers(int $first_number, int $second_number): int {
+  return $first_number + $second_number;
+};</code></pre>
+        <p class="fragment fade-down">Här säger vi att båda parametrarna måste kunna konverteras till <code><em>int</em></code> samt att functionen måste returnera en <code><em>int</em></code></p>
+        </section>
+        <section>
+          <p><em>Scalar Type Hints</em></p>
+          <p>Vi kan göra det striktare så att type coercion (implicit typomvandling) inte får ske</p>
+          <pre><code class="language-php">declare(strict_types=1);
+
+function add_numbers(int $first_number, int $second_number): int {
+  return $first_number + $second_number;
+};</code></pre>
+        <p class="fragment fade-down">Värdena måste vara explicit <code><em>int</em></code> och inte något som kan konverteras till <code><em>int</em></code></p>
+        <p class="fragment fade-down">Detta är bara per fil, måste isf deklareras i varje fil där man vill ha detta.</p>
+        </section>
+      </section>
+      <section>
+        <section>
+          <h1><em><code>require/include</code></em></h1>
+        </section>
+        <section>
+          <p>En styrka i backend och PHP är uppdelning i olika filer och möjligheten att dela upp stora kodblock i mindre filer som importeras vid behov.</p>
+          <p class="fragment fade-down">PHP gör detta med <code><em>include</em></code> och <code><em>require</em></code></p>
+          <pre><code class="language-php">include 'my_other_file.php';
+require 'my_secret_file.php';</code></pre>
+          <p class="fragment fade-down">Om filen inte finns så kommer en <em>varning</em> visas om du har använt include och ett <strong>error</strong> visas om du har använt require</p>
+        </section>
+        <section>
+          <p>Varianten <code><em>_once</em></code></p>
+          <p>Använder du t.ex. <code><em>require_once</em></code> så kommer PHP först att kolla om filen är required redan och om den redan finns, skippa att lägga in den på nytt.</p>
+          <p class="fragment fade-down">Bara <code><em>require</em></code> kommer att villkorslöst lägga till din fil så många gånger du lägger till den.</p>
+          <pre><code class="language-php">
+require 'my_file.php';
+require 'my_file.php';
+</code></pre>
+        <p class="fragment fade-down">I detta scenarion kan det ske att du får error beroende på vad din fil innehåller</p>
+        </section>
+        <section>
+          <p>Varianten <code><em>_once</em></code></p>
+          <pre><code class="language-php">require_once 'my_file.php';
+require_once 'my_file.php';
+</code></pre>
+        <p class="fragment fade-down">I detta scenarion kan det ske att du får error beroende på vad din fil innehåller</p>
+        </section>
+        <section>
+          <p>Annan syntax</p>
+          <pre><code class="language-php">include('my_file.php');
+include_once('my_file.php');
+require('my_file.php');
+require_once('my_file.php');</code></pre>
+        </section>
+        <section>
+          <p>Övningar finns på <em>Studentportalen/GitHub</em></p>
+          <p>Eget arbete med övningar i eftermiddag</p>
+          <p></p>
+        </section>
+      </section>
+        
+    </div>
+  </div>
+  <!-- reveal.js scripts -->
+  <script src="lib/js/head.min.js"></script>
+  <script src="js/reveal.js"></script>
+  <script>
+    Reveal.initialize({
+      transition: 'zoom',
+      height: '100%',
+      width: '80%',
+      controls: true,
+      progress: true,
+      history: true,
+      keyboard: true,
+      overview: true,
+      center: true,
+      dependencies: [
+      { src: 'lib/js/classList.js', condition: function (){
+        return !document.body.classList;}
+      },
+      { src: 'plugin/notes/notes.js', async: true },
+      { src : 'lib/prismjs/prism.js'},
+      { src : 'js/print.js'}
+      ]
+    });
+  </script>
+</body>
+</html>

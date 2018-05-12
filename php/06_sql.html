@@ -1,0 +1,431 @@
+<html>
+<head>
+  <base href="https://jesperorb.github.io/revealjs/">
+  <!-- <base href="file:///Users/jesperorb/projects/revealjs/"> -->
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/theme/default.css">
+  <link rel="stylesheet" type="text/css" href="lib/prismjs/prism.css">
+  <link rel="stylesheet" type="text/css" href="lib/css/base16-oceanicnext.dark.css">
+  <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+  <meta name="description" content="SQL">
+  <meta name="author" content="jesperorb">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <title> SQL </title>
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+  <style>
+    .reveal table, td, tr, th{
+        text-align: left; 
+        border: 2px solid #444; 
+        color: #444;
+        font: 100%/1.5 monospace; 
+    }
+    .reveal th{
+        background-color: #645264;
+        color: #fff;
+        border-right: 2px solid #fff;
+    }
+    .reveal th:last-of-type{
+      border-right: 2px solid #444;
+    }
+    .reveal td{
+      border: 2px solid #444;
+    }
+    .reveal table{
+      margin-bottom: 3rem;
+    }
+    .reveal .slides section .fragment.highlight-red.visible{
+      background: #f0ad4e;
+      color: white;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+
+      <!-- INTRO SLIDE -->
+      <section>
+        <section>
+          <h1><strong>SQL Intro</strong></h1>
+        </section>
+      </section>
+      
+      <!-- CONTENT -->
+
+      <section>
+        <section>
+          <h1><em>Structured Query Language</em></h1>
+        </section>
+        <section>
+          <h3><em style="display: inline-block; padding: 1rem;">query </em> </h3>
+          <blockquote>A question, especially one expressing doubt or requesting information.</blockquote>
+          <p class="fragment fade-down">Strukturerat frågespråk 🤔</p>
+        </section>
+        <section>
+          <h3><em>SQL</em></h3>
+          <p>Språk för att hämta data från databaser på ett strukturerat sätt</p>
+          <p class="fragment fade-down">SQL har flera olika <strong>dialekter</strong></p>
+          <p class="fragment fade-down">Den vi ska använda är <strong>MySQL</strong>, den mest använda</p>
+        </section>
+        <section>
+          <p>Frontend: aldrig <em>persistent data</em> lagras alltid tillfälligt</p>
+          <p>Alla variabler ligger enbart i minnet</p>
+        </section>
+        <section>
+          <img src="https://dab1nmslvvntp.cloudfront.net/wp-content/uploads/2014/08/1409261668002.png" alt="Full Stack">
+        </section>
+        <section>
+          <h3><em>Databas</em></h3>
+          <p>En bas för data, en låda med data</p>
+          <p class="fragment fade-down">Fast sjukt strukturerad i tabeller</p>
+          <table>      
+            <tr>
+              <th>id</th>
+              <th>username</th>
+              <th>password</th>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td>zero_cool</td>
+              <td>alligator1</td>
+            </tr>
+          </table>
+        </section>
+        <section>
+          <h3><strong>Relationsdatabas</strong></h3>
+          <p>Data ordnad i olika relationer, tabeller</p>
+          <p class="fragment fade-down">Relationera överlappar för att binda ihop data</p>
+          <p class="fragment fade-down">Det går skitsnabbt att hämta och lagra data</p>
+          <p class="fragment fade-down"><em>Ett avancerat excel-blad</em></p>
+        </section>
+        <section data-transition="convex none">
+          <table>      
+            <tr>
+              <th>id</th>
+              <th>title</th>
+              <th>createdBy</th>
+            </tr>
+            <tr>
+              <td>42</td>
+              <td>How to code</td>
+              <td>Jesper</td>
+            </tr>
+          </table>
+        </section>
+        <section data-transition="none">
+          <table>      
+            <tr>
+              <th>id</th>
+              <th>title</th>
+              <th>createdBy</th>
+              <th>createdByEmail</th>
+            </tr>
+            <tr>
+              <td>42</td>
+              <td>How to code</td>
+              <td>Jesper</td>
+              <td>jesper@orb.se</td>
+            </tr>
+          </table>
+        </section>
+        <section data-transition="none">
+          <table>      
+            <tr>
+              <th>id</th>
+              <th>title</th>
+              <th>createdBy</th>
+            </tr>
+            <tr>
+              <td>42</td>
+              <td>How to code</td>
+              <td><span class="fragment highlight-red">15</span></td>
+            </tr>
+          </table>
+          <table>      
+            <tr>
+              <th>id</th>
+              <th>username</th>
+              <th>password</th>
+              <th>email</th>
+            </tr>
+            <tr>
+              <td><span class="fragment highlight-red">15</span></td>
+              <td>jesperorb</td>
+              <td>pass123</td>
+              <td>jesper@orb.se</td>
+            </tr>
+          </table>
+        </section>
+    </section>
+
+      <!-- SQL -->
+
+      <section>
+        <section>
+          <h1><strong>phpMyAdmin</strong></h1>
+        </section>
+        <section>
+          <h3><em>RDBMS</em></h3>
+          <p>Först måste vi ha ett <br /> <em>Relational Database Management System</em></p>
+          <p class="fragment fade-down">Ett system som hanterar all data</p>
+          <p class="fragment fade-down">Men det har vi redan: <em>phpMyAdmin</em></p>
+        </section>
+        <section>
+          <h3><em>Datatyper</em></h3>
+          <ul>
+          <li><code>int</code> - heltal, 4 byte</li>
+          <li><code>float</code> - flyttal, 4 byte</li>
+          <li><code>varchar</code> - strängar, 1 byte per tecken</li>
+          <li><code>text</code> - använd för mycket långa strängar</li>
+          <li><code>datetime</code> - datum och tid, i formatet '2016-12-19 14:01:00'</li>
+        </ul>
+        </section>
+        <section>
+          <h3><em>CRUD!</em></h3>
+          <ul>
+            <li><code>INSERT</code> : CREATE</li>
+            <li><code>SELECT</code> : READ</li>
+            <li><code>UPDATE</code> : UPDATE</li>
+            <li><code>DELETE</code> : DELETE</li>
+          </ul>
+          <p class="fragment fade-down">Allting på hela internet baseras på CRUD</p>
+        </section>
+        <section>
+          <h3><em>Primary Key</em></h3>
+          <p>Varje rad i en tabell måste ha ett unikt id</p>
+          <table class="fragment fade-down">      
+            <tr>
+              <th>id</th>
+              <th>title</th>
+              <th>createdBy</th>
+            </tr>
+            <tr>
+              <td><span class="fragment highlight-red">42</span></td>
+              <td>How to code</td>
+              <td>15</td>
+            </tr>
+          </table>
+          <table class="fragment fade-down">      
+            <tr>
+              <th>id</th>
+              <th>title</th>
+              <th>createdBy</th>
+            </tr>
+            <tr>
+              <td><span class="fragment highlight-red">105</span></td>
+              <td>How to code</td>
+              <td>15</td>
+            </tr>
+          </table>
+        </section>
+        <section>
+          <h3><strong>Vi skapar en tabell</strong></h3>
+        </section>
+        <section>
+          <img src="https://giant.gfycat.com/BewitchedOpenFallowdeer.gif" alt="Hackers!">
+        </section>
+        <section>
+          <h3><strong>Vi hämtar från en tabell?</strong></h3>
+        </section>
+      </section>
+      <section>
+        <section>
+          <h1><strong>SQL Queries</strong></h1>
+        </section>
+        <section>
+          <h3><em>SELECT FROM</em></h3>
+          <pre class="fragment fade-down"><code class="language-mysql">SELECT * FROM table;</code></pre>
+          <p class="fragment fade-down">Asterisk säger att vi ska välja alla kolumner</p>
+          <pre class="fragment fade-down"><code class="language-mysql">SELECT name FROM table;</code></pre>
+        </section>
+        <section>
+          <h3><em>SELECT FROM WHERE</em></h3>
+          <p>Vi vill ju kunna sålla innehållet. Detta gör man med <code>WHERE</code></p>
+          <pre class="fragment fade-down"><code class="language-sql">SELECT * FROM notes WHERE id = 1;</code></pre>
+          <p class="fragment fade-down">Alla kolumner är sökbara</p>
+          <pre class="fragment fade-down"><code class="language-sql">SELECT * FROM notes WHERE title = "My Title";</code></pre>
+        </section>
+        <section>
+          <h3><em>SELECT DISTINCT</em></h3>
+          <p>När man vill ta bort dubletter</p>
+          <pre><code class="language-sql">SELECT DISTINCT name FROM notes;</code></pre>
+          <p class="fragment fade-down">Om det finns flera personer med samma namn t.ex. så plockar vi enbart namnen</p></pre>
+          <p class="fragment fade-down">Annars får vi kanske tillbaka 15 Magdalena</p>
+        </section>
+        <section>
+          <h3><em>SELECT AS</em></h3>
+          <p>Döper om en kolumn när vi hämtar den</p>
+          <p class="fragment fade-down">Ändrar INTE i själva databasen</p>
+          <pre class="fragment fade-down"><code class="language-sql">SELECT title AS BlogTitle from blog;</code></pre>
+          <p class="fragment fade-down"><code>title</code> blir till <code>BlogTitle</code> i resultatet men heter fortfarande <code>title</code> i tabellen</p>
+        </section>
+        <section>
+          <h3><em>SELECT COUNT()</em></h3>
+          <p>Räknar antalet rader (rows) i en tabell</p>
+          <pre><code class="language-sql">SELECT COUNT(name) FROM notes</code></pre>
+        </section>
+        <section>
+          <h3><em>ORDER BY</em></h3>
+          <p>Vi kan även direkt sortera data i en query</p>
+          <pre><code class="language-sql">SELECT * FROM notes ORDER BY name ASC</code></pre>
+          <p class="fragment fade-down"><code><em>ASC</em></code> - Ascending == stigande </p>
+          <p class="fragment fade-down"><code><em>DESC</em></code> - Descending == fallande </p>
+        </section>
+        <section>
+          <h3><em>UPDATE</em></h3>
+          <p>Vi uppdaterar tabeller enligt följande mönster (obs pseudokod)</p>
+          <pre><code class="language-sql">UPDATE table
+SET column = value
+WHERE condition;</code></pre>
+        <pre><code class="language-sql">UPDATE notes
+SET title = "My New Shiny Title!"
+WHERE id = 1;</code></pre>
+        </section>
+
+        <section>
+          <h3><em>DELETE</em></h3>
+          <p>DELETE används för att ta bort allt eller vissa rader</p>
+          <pre><code class="language-sql">--Tar bort allt!
+DELETE FROM notes;</code></pre>
+<p class="fragment fade-down">Vi måste använda <code><em>condition</em></code></p>
+        </section>
+        <section>
+          <p>Tar bort en specifik rad</p>
+          <pre><code class="language-sql">DELETE FROM notes
+WHERE id = 1;</code></pre>
+        <p class="fragment fade-down">Tar bort massa!</p>
+        <pre class="fragment fade-down"><code class="language-sql">DELETE FROM notes
+WHERE id > 1;</code></pre>
+        </section>      
+      </section>
+      
+      <!-- CONTENT -->
+
+      <section>
+        <section>
+          <h1><strong>PDO + SQL</strong></h1>
+        </section>
+        <section>
+          <p><em>PDO</em> är numera det rätta sättet att <br/>säkert koppla till databaser via PHP</p>
+          <pre><code class="language-php">mysql_connect(); //the old ways</code></pre>
+          <pre><code class="language-php">mysqli_connect(); //the old ways</code></pre>
+          <p class="fragment fade-down">Mer osäkra kopplingar, <em>PDO</em> gör mycket arbete åt oss</p>
+        </section>
+        <section>
+          <img src="http://i.imgur.com/yRG9VCw.png" alt="Decrap">
+        </section>
+        <section>
+          <p><em>PDO</em> behöver: Database source, username, password, (options)</p>
+          <p class="fragment fade-down">Options är optional, vi kan skippa det men kan behövas senare.</p>
+          <a class="fragment fade-down" href="http://localhost:8888/MAMP">http://localhost:8888/MAMP/</a>
+        </section>
+        <section>
+          <p>Vi instansierar ett nytt <strong>PDO-object</strong></p>
+          <pre><code class="language-php">$pdo = new PDO(
+  "mysql:host=localhost;dbname=selected_database;charset=utf8",
+  "root",
+  "root"
+);</code></pre>
+        <p class="fragment fade-down">Spara instansen!</p>
+        </section>
+        <section>
+          <p><em>Vanliga fel</em></p>
+          <p>Rätt adress= (localhost  eller 127.0.0.1)</p>
+          <p>Testa ange portnummer</p>
+          <p>Rätt lösen och användarnamn?</p>
+          <p>Har du angett charset? (charset ska vara  <em><code>'utf8'</code></em>)</p>
+        </section>
+        <section>
+          <p>Lägg till i början av filen</p>
+          <pre><code class="language-php">ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);</code></pre>
+        </section>
+        <section>
+          <p><em>Prepare</em></p>
+          <p>Med <em><code>prepare</code></em> skriver vi våra <strong>SQL</strong>-statements</p>
+          <pre><code class="language-php">$statement = $pdo->prepare("SELECT * FROM pc");</code></pre>
+        </section>
+        <section>
+          <p>När vi har förberett ett statement måste vi utföra det</p>
+          <pre><code class="language-php">$statement->execute();</code></pre>
+          <p class="fragment fade-down"><code><em>$statement</em></code> kommer nu att innehålla de hämtade raderna och vi kan loopa igenom dem.</p>
+        </section>
+        <section>
+          <p><em>that's so fetch!</em></p>
+          <pre><code class="language-php">$statement = $pdo->prepare("SELECT * FROM celebrities");
+$statement->execute();
+$data = $statement->fetchAll(PDO::FETCH_ASSOC);</code></pre>
+        </section>
+      </section>
+      <section>
+        <section>
+          <h1>
+            <strong>Superglobals</strong>
+          </h1>
+        </section>
+        <section>
+          <p>I PHP har vi såkallade <em>Superglobals</em></p>
+          <p>Dessa används främst för att hämta information vid <strong>GET</strong> och <strong>POST</strong></p>
+          <p class="fragment fade-down">Varje request innehåller som vi tidigare vet mer data än enbart URLen</p>
+          <p></p>
+        </section>
+        <section>
+          <p><code><em>var_dump</em></code> dessa i er index.php när ni behöver se vad som skickas</p>
+          <pre><code class="language-php">$_POST
+$_GET
+$_SERVER</code></pre>
+        </section>
+        <section>
+          <p>Med <code><em>$_POST</em></code> och <code><em>$_GET</em></code> kan vi hämta data som skickas vid varje request</p>
+          <p class="fragment fade-down">Kom ihåg <strong>CRUD</strong></p>
+        </section>
+        <section>
+            <p><strong>$_GET</strong> för att få URL-query</p>
+            <pre><code class="language-html">https://mysite.com?name=jesper&ok=whatev</code></pre>
+            <pre><code class="language-php">var_dump($_GET) // { name: jesper, ok: whatev }</code></pre>
+        </section>
+        <section>
+          <p>Skillnaden mellan <code><em>$_GET</em></code> och <code><em>$_POST</em></code></p>
+          <p>I <code><em>$_POST</em></code> skickas allt gömt</p>
+          <p>I <code><em>$_GET</em></code> skickas allt i URLen</p>
+          <p class="fragment fade-down">Båda metoderna kan skicka samma information</p>
+        </section>
+      </section>
+
+    </div>
+  </div>
+  <!-- reveal.js scripts -->
+  <script src="lib/js/head.min.js"></script>
+  <script src="js/reveal.js"></script>
+  <script>
+    Reveal.initialize({
+      transition: 'zoom',
+      height: '90%',
+      width: '70%',
+      controls: true,
+      progress: true,
+      history: true,
+      keyboard: true,
+      overview: true,
+      center: true,
+      dependencies: [
+      { src: 'lib/js/classList.js',condition: function (){
+        return !document.body.classList;}},
+        { src: 'plugin/notes/notes.js', async: true },
+        {src : 'lib/prismjs/prism.js'},
+        {src : 'js/print.js'}
+        ]
+      });
+    </script>
+</body>
+<!-- </html> -->

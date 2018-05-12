@@ -1,0 +1,158 @@
+<html>
+<head>
+  <base href="https://jesperorb.github.io/revealjs/">
+  <!-- <base href="file:///Users/jesperorb/projects/revealjs/"> -->
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/theme/default.css">
+  <link rel="stylesheet" type="text/css" href="lib/prismjs/prism.css">
+  <link rel="stylesheet" type="text/css" href="lib/css/base16-oceanicnext.dark.css">
+  <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+  <meta name="description" content="Wordpress">
+  <meta name="author" content="jesperorb">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <title> Wordpress </title>
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <section>
+        <section>
+          <h1><strong>Wordpress</strong></h1>
+        </section>
+        <section>
+          <p>Wordpress är anledningen till att ni lär er PHP egentligen</p>
+          <p class="fragment fade-down">Frågar du mig så är det för att alla frontendare borde ha en uppfattning om vad som händer bakom kulisserna</p>
+        </section>
+        <section>
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Gutenberg.jpg/220px-Gutenberg.jpg">
+        </section>
+        <section>
+          <h4><a href="https://wordpress.org">https://wordpress.org</a></h4>
+          <h4><a href="https://wordpress.com">https://wordpress.com</a></h4>
+        </section>
+        <section>
+          <p><em>CMS</em></p>
+          <ul>
+            <li class="fragment fade-down"><strong>C</strong>ontent</li>
+            <li class="fragment fade-down"><strong>M</strong>anagement</li>
+            <li class="fragment fade-down"><strong>S</strong>ystem</li>
+          </ul>
+          <p class="fragment fade-down">Gör så att användaren kan skapa innehåll</p>
+        </section>
+        <section>
+          <p><em>Andra CMS</em></p>
+          <ul>
+            <li><strong>DRUPAL</strong></li>
+            <li><strong>JOOMLA</strong></li>
+            <li><strong>EpiServer</strong></li>
+          </ul>
+        </section>
+        <section>
+          <p><em>Alla ska ha satt upp en wordpressinstallation lokalt</em></p>
+          <ul>
+            <li>Ladda ner Wordpress-zipen från wordpress hemsida</li>
+            <li>Packa upp innehållet i MAMP</li>
+            <li>Besök sidan och kör installationen</li>
+            <li>Du kanske behöver skapa databasen själv</li>
+          </ul>
+        </section>
+      </section>
+
+      <section>
+        <section>
+          <h1><em>Child Theme</em></h1>
+        </section>
+        <section>
+          <p>Antingen kan vi modifera teman direkt</p>
+          <p>Eller skapa ett undertema där enbart våra ändringar ligger</p>
+          <p class="fragment fade-down">Förlänger det ursprungliga temat</p>
+        </section>
+        <section>
+          <p>Två filer behövs</p>
+          <p><strong>style.css</strong></p>
+          <p><strong>functions.php</strong></p>
+        </section>
+        <section>
+          <p>Alla ska sätta upp ett child theme</p>
+          <p>Instruktioner finns på GitHub:</p>
+          <p><strong><code>12_wordpress.md</code></strong></p>
+        </section>
+      </section>
+
+      <section>
+        <section>
+          <h1><em>Struktur</em></h1>
+        </section>
+        <section>
+          <p><code><em>wp-content</em></code></p>
+          <ul>
+            <li>themes</li>
+            <li>plugins</li>
+            <li>uploads</li>
+          </ul>
+          <p>Alla filer som behöver ändras ligger i mappen wp-content</p>
+        </section>
+        <section>
+          <p><strong>Template Hierarchy</strong></p>
+          <img src="https://developer.wordpress.org/files/2014/10/wp-hierarchy.png">
+          <a class="reference" href="https://developer.wordpress.org/themes/basics/template-hierarchy/">https://developer.wordpress.org/themes/basics/template-hierarchy/</a>
+        </section>
+        <section data-background-image="https://developer.wordpress.org/files/2014/10/wp-hierarchy.png">     
+        </section>
+        <section>
+          <ul>
+            <li>Om du har en statisk framsida: <code><em>front-page.php</em></code></li>
+            <li>Dina bloginlägg: <code><em>home.php</em></code></li>
+            <li>Resten beror på om du ska se en sida, inlägg, arkiv etc.</li>
+          </ul>
+        </section>
+      </section>
+
+        <section>
+          <h4>WordPress Codex - Bibeln</h4>
+          <h4><a href="https://codex.wordpress.org/">https://codex.wordpress.org/</a></h4>
+        </section>
+
+      <section>
+        <section>
+          <p>Andra inlämningsuppgiften ligger uppe</p>
+          <p>Börja idag på eftermiddagen att göra grundstrukturen</p>
+        </section>
+      </section>
+
+    </div>
+  </div>
+  <!-- reveal.js scripts -->
+  <script src="lib/js/head.min.js"></script>
+  <script src="js/reveal.js"></script>
+  <script>
+    Reveal.initialize({
+      transition: 'zoom',
+      height: '90%',
+      width: '70%',
+      controls: true,
+      progress: true,
+      history: true,
+      keyboard: true,
+      overview: true,
+      center: true,
+      dependencies: [
+      { src: 'lib/js/classList.js',condition: function (){
+        return !document.body.classList;}},
+        { src: 'plugin/notes/notes.js', async: true },
+        {src : 'lib/prismjs/prism.js'},
+        {src : 'js/print.js'}
+        ]
+      });
+    </script>
+  </body>
+  </html>

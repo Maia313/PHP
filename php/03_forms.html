@@ -1,0 +1,137 @@
+<html>
+<head>
+  <base href="https://jesperorb.github.io/revealjs/">
+  <!-- <base href="file:///Users/jesperorb/projects/revealjs/"> -->
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/theme/default.css">
+  <link rel="stylesheet" type="text/css" href="lib/prismjs/prism.css">
+  <link rel="stylesheet" type="text/css" href="lib/css/base16-oceanicnext.dark.css">
+  <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+  <meta name="description" content="Forms">
+  <meta name="author" content="jesperorb">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <title> Forms </title>
+  <script>
+  var link = document.createElement( 'link' );
+  link.rel = 'stylesheet';
+  link.type = 'text/css';
+  link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+  document.getElementsByTagName( 'head' )[0].appendChild( link );
+</script>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <section>
+        <section>
+          <h1><strong>Forms</strong></h1>
+        </section>
+        <section>
+          <p>HTTP-protokollet</p>
+          <ul>
+            <li>GET</li>
+            <li>POST</li>
+            <li>PATCH</li>
+            <li>PUT</li>
+            <li>DELETE</li>
+          </ul>
+          <p class="fragment fade-down">Alla backendspråk har ett sätt att hantera dessa <code><em>request methods</em></code></p>
+        </section>
+        <section>
+          <p><em>SUPERGLOBALS</em></p>
+          <p>PHP har ett antal variabler som alltid är tillgängliga på varje sida</p>
+          <p class="fragment fade-down">Varje sida är dock stateless, kommer inte ihåg vad som hände på den föregående sidan</p>
+          <p class="fragment fade-down">Men kan alltid referera till olika superglobala variabler</p>
+        </section>
+        <section>
+          <ul>
+            <li><code><em>$_GET</em></code></li>
+            <li><code><em>$_POST</em></code></li>
+            <li><code><em>$_SERVER</em></code></li>
+          </ul>
+          <p class="fragment fade-down">+ flera andra men de här är de mest vettiga</p>
+        </section>
+        <section>
+          <p>Allting i vår query string hamnar i <code><em>$_GET</em></code></p>
+          <p>Allting i body hamnar i <code><em>$_POST</em></code></p>
+          <p class="fragment fade-down"></p>
+        </section>
+        <section>
+          <pre><code class="language-html">&lt;form action=&quot;form.php&quot; method=&quot;POST&quot;&gt;
+    &lt;input type=&quot;text&quot; name=&quot;username&quot; /&gt;
+    &lt;input type=&quot;submit&quot; value=&quot;Skicka&quot; /&gt;
+&lt;/form&gt;</code></pre>
+        <p class="fragment fade-down">Varje formulär vill ha en <strong>action</strong> och <em>method</em></p>
+        <p class="fragment fade-down">Samt <code><em>&lt;input&gt;</em></code> för varje värde som ska skickas</p>
+        <p class="fragment fade-down">OBS, vi har bara POST och GET</p>
+        </section>
+         <section>
+          <p><code><em>action</em></code> är viktigt</p>
+          <p><code><em>method</em></code> är viktigt</p>
+          <p><code><em>name</em></code> på inputfält är viktigt</p>
+          <p class="fragment fade-down">Har vi detta kan vi lagra informationen på rätt sätt i PHP</p>
+        </section>
+        <section>
+          <p>HTML-forumlär och information skickad till PHP förväntar sig vara formatterad som <strong>x-www-form-urlencoded</strong></p>
+          <p class="fragment fade-down">Men kan även hantera att skicka informationen som JSON men är inte default inställd på det.</p>
+          <p class="fragment fade-down">Information skickas enklast med <code><em>FormData();</em></code></p>
+          <pre class="fragment fade-down"><code class="language-js">let formData = new FormData();</code></pre>
+        </section>
+        <section>
+          <pre><code class="language-js">async function postData() {
+  const formData = new FormData();
+  formData.append('lastName', 'Orb');
+  formData.append('firstName', 'Jesper');
+  const response = await fetch('post_data.php', {
+    method: 'POST',
+    body: formData
+  });
+  const data = await response.json();
+}</code></pre>
+        </section>
+        <section>
+          <p>Detta går bara om vi hanterar det serverside</p>
+          <pre><code class="language-js">async function postJSONData(){
+  const response = await fetch('post_data.php', {
+    method: 'POST',
+    body: JSON.stringify({ name: 'Jesper' })
+  })
+  const data = await response.json();
+}
+</code></pre>
+        <pre><code class="language-php">$data = json_decode(file_get_contents('php://input'), true);</code></pre>
+        </section>
+        <section>
+          <p>Övningar finns på <em>GitHub/Studentportalen</em></p>
+        </section>
+      </section>
+    </div>
+  </div>
+  <!-- reveal.js scripts -->
+  <script src="lib/js/head.min.js"></script>
+  <script src="js/reveal.js"></script>
+  <script>
+    Reveal.initialize({
+      transition: 'zoom',
+      height: '100%',
+      width: '80%',
+      controls: true,
+      progress: true,
+      history: true,
+      keyboard: true,
+      overview: true,
+      center: true,
+      dependencies: [
+      { src: 'lib/js/classList.js', condition: function (){
+        return !document.body.classList;}
+      },
+      { src: 'plugin/notes/notes.js', async: true },
+      { src : 'lib/prismjs/prism.js'},
+      { src : 'js/print.js'}
+      ]
+    });
+  </script>
+</body>
+</html>

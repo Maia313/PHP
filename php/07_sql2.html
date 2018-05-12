@@ -1,0 +1,259 @@
+<html lang="en">
+
+<head>
+  <base href="https://jesperorb.github.io/revealjs/">
+  <!-- <base href="file:///Users/jesperorb/projects/revealjs/"> -->
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/theme/default.css">
+  <link rel="stylesheet" type="text/css" href="lib/prismjs/prism.css">
+  <link rel="stylesheet" type="text/css" href="lib/css/base16-oceanicnext.dark.css">
+  <link rel="shortcut icon" type="image/png" href="favicon.png" />
+  <meta name="description" content="SQL">
+  <meta name="author" content="jesperorb">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <title> SQL </title>
+  <script>
+    var link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+    document.getElementsByTagName('head')[0].appendChild(link);
+  </script>
+</head>
+
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section>
+        <section>
+          <h1><strong>SQL + PHP</strong></h1>
+        </section>
+      </section>
+
+      <section>
+        <section>
+          <p>Hämta data</p>
+          <pre><code class="language-sql">SELECT * FROM users</code></pre>
+        </section>
+        <section>
+          <p>Lagra data</p>
+          <pre><code class="language-sql">INSERT INTO users 
+(username, password) 
+VALUES ("Johnny", "TurboManForChristmas")</code></pre>
+          <p class="fragment fade-down">Håll koll på vilka kolumner du specificerar. Observera att ID inte behöver skickas med om det autoinkrementeras</p>
+        </section>
+        <section>
+          <p>Ta bort data</p>
+          <pre><code class="language-sql">DELETE FROM users WHERE name = "Johnny"</code></pre>
+          <p class="fragment fade-down">Vi ska nästan alltid specificera <code><em>WHERE</em></code>i kombination med <code><em>DELETE FROM</em></code></p>
+        </section>
+        <section>
+          <p>Uppdatera data</p>
+          <pre><code class="language-sql">UPDATE users
+SET name="Jonne"
+WHERE name="Johnny"</code></pre>
+        </section>
+        <section>
+          <p>Koppla ihop det med PHP</p>
+          <pre><code class="language-php">$pdo = new PDO(
+  "mysql:host=localhost:8889;dbname=users;charset=utf8",
+  "root",
+  "root"
+);</code></pre>
+        </section>
+        <section>
+          <p>Sedan utfärda ett <em>prepared statement</em> och skicka till databasen</p>
+          <pre><code class="language-php">$statement = $pdo->prepare("SELECT * FROM users");
+$statement->execute(); //Run the query
+$returned_data = $statement->fetchAll(PDO::FETCH_ASSOC);</code></pre>
+        </section>
+        <section>
+          <p><code><em>:</em></code> i prepared statement betyder placeholder</p>
+          <pre><code class="language-php">$statement = $pdo->prepare("DELETE FROM users WHERE id= :id");
+$statement->execute([ ":id" => 5 ]);</code></pre>
+          <p class="fragment fade-down">Alla placeholders behöver ha ett sammankopplat värde när vi kallar på <code><em>execute()</em></code></p>
+        </section>
+        <section>
+          <p>Named placeholder</p>
+          <pre><code class="language-php">$statement = $pdo->prepare("DELETE FROM users WHERE id= :id");
+$statement->execute([ ":id" => 5 ]);</code></pre>
+          <p>Unnamed placeholder</p>
+          <pre><code class="language-php">$statement = $pdo->prepare("DELETE FROM users WHERE id= ?");
+$statement->execute([ 5 ]);</code></pre>
+          <p class="fragment fade-down">Med icke namngiven placholder spelar ordningen roll, vilket det inte gör med namngiven</p>
+        </section>
+      </section>
+
+      <section>
+        <section>
+          <h1><strong>Normalisering</strong></h1>
+        </section>
+        <section>
+          <blockquote>
+            Reduce data redundancy and improve data integrity
+          </blockquote>
+          <p class="fragment fade-down">Vi ska normalisera våra databaser för att undvika att lagra för mycket data</p>
+          <p class="fragment fade-down">Samt att undvika såkallade
+            <em>anomalies</em>
+          </p>
+        </section>
+        <section>
+          <img src="http://i.imgur.com/VwUxbA6.png" alt="Normaliserad">
+        </section>
+        <section>
+          <h3>
+            <em>Anomaly == avvikelse</em>
+          </h3>
+          <p>Om vi duplicerar denna data så utsätts informationen för risker</p>
+          <ul class="fragment fade-down">
+            <li>Update anomaly</li>
+            <li>Insertion anomaly</li>
+            <li>Deletion anomaly</li>
+            <p class="fragment fade-down">Normalisering innebär att man delar upp tabeller så att riskerna elimineras.</p>
+          </ul>
+        </section>
+        <section>
+          <img src="https://i.imgur.com/bAJePuL.png" alt="Normalised">
+        </section>
+        <section>
+          <p>Eventull risk</p>
+          <img style="max-height:500px;" src="https://i.imgur.com/oTJwrKR.png" alt="Deletion anomaly">
+          <p>Födelsedagen behöver aldrig ändras men kan råka göra det ändå</p>
+        </section>
+        <section>
+          <h3>
+            <em>Normalisering</em>
+          </h3>
+          <p class="fragment fade-down">Viktigt att dela upp data i olika tabeller för att undvika avvikelser</p>
+          <p class="fragment fade-down">Det svåra är att sedan sätta ihop tabellerna igen för att få det resultat man söker</p>
+        </section>
+        <section>
+          <p>
+            <strong>Vilka kolumner och tabeller behövs för följande:</strong>
+          </p>
+          <ol>
+            <li>Instagram-post</li>
+          </ol>
+          <p>Övergripande struktur, inte så detaljerat. Vilka tabeller behöver vi och vilken information ska de innehålla?</p>
+        </section>
+      </section>
+      <section>
+        <section data-background="#0000ff">
+        <img style="background:none; box-shadow: none; position: absolute; top: 0; right: 0;" src="https://zippy.gfycat.com/ElderlyJovialFinwhale.gif" alt="A rotating globe."> 
+        <img style="background:none; box-shadow: none; position: absolute; top: 0; right: 150;" src="https://zippy.gfycat.com/ElderlyJovialFinwhale.gif" alt="A rotating globe."> 
+        <marquee scrollamount="20"><h1 id="intro-text">SQL JOINS</h1></marquee>
+      </section>
+        <section>
+          <p>Alla
+            <em>JOINS</em> skapar en ny tabell som innehåller alla kolumner från både den första och den andra tabellen. Det
+            som skiljer
+            <em>JOINS</em> är vilka rader som tas med.</p>
+        </section>
+        <section>
+          <ul>
+            <li class="fragment fade-down">
+              <strong>
+                <code>CROSS</code>
+              </strong> - alla rader (behövs inga gemensamma kolumner)</li>
+            <li class="fragment fade-down">
+              <code><strong>INNER</strong></code> - alla rader där värdet i en gemensam kolumn stämmer överens</li>
+            <li class="fragment fade-down">
+              <code><strong>LEFT</strong></code> - alla rader från en INNER JOIN plus även de från den "vänstra" tabellen som inte matchar något i den högra</li>
+            <li class="fragment fade-down">
+              <code><strong>RIGHT</strong></code> - som en LEFT JOIN fast tvärtom</li>
+          </ul>
+          <p class="fragment fade-down">Alla joins utgår ifrån CROSS JOIN</p>
+
+        </section>
+        <section data-background="white">
+          <img src="http://i.imgur.com/byc1Ucb.png" alt="">
+        </section>
+        <section>
+          <img src="https://blog.codinghorror.com/content/images/uploads/2007/10/6a0120a85dcdae970b012877702708970c-pi.png" alt="Inner join.">
+        </section>
+        <section data-background="white">
+          <img src="http://i.imgur.com/f5hAT17.png" alt="">
+        </section>
+        <section data-background="white">
+          <img src="http://i.imgur.com/nG7rF1N.png" alt="">
+        </section>
+        <section>
+          <p>Våra tidigare tabeller</p>
+          <img src="https://i.imgur.com/bAJePuL.png" alt="Normalised">
+          <pre><code class="language-sql">SELECT *
+FROM books
+JOIN authors 
+ON books.author = authors.author</code></pre>
+        </section>
+      </section>
+
+      <section>
+        <section>
+          <h1>
+            <strong>Bra att ha grejer</strong>
+          </h1>
+        </section>
+        <section>
+          <h3>
+            <em>Namngivna tabeller</em>
+          </h3>
+          <pre><code class="language-sql">SELECT * FROM authors AS a;</code></pre>
+          <pre><code class="language-sql">SELECT * FROM authors a;</code></pre>
+          <p class="fragment fade-down">Blir användbart när vi har flera olika tabeller! Mindre att skriva</p>
+        </section>
+        <section>
+          <h3>
+            <em>Aggregate functions</em>
+          </h3>
+          <p>CONCAT() - Lägger ihop strängar</p>
+          <p>AVG() - Tar ut medelvärdet</p>
+          <p>MAX() - Tar ut maxvärdet</p>
+          <p>MIN() - Tar ut minvärdet</p>
+          <p class="fragment fade-down">Det finns alltid flera olika sätt att lösa alla SQL-queries</p>
+        </section>
+        <section>
+          <h3>
+            <em>GROUP BY</em>
+          </h3>
+          <p>När man aggregerar (count, avg, max, min) måste man ibland gruppera efter olika kolumner</p>
+          <p class="fragment fade-down">Vad händer när vi använder
+            <strong>
+              <code>MAX();</code>
+            </strong> för att få ut flera maxvärden</p>
+          <pre class="fragment fade-down"><code class="language-sql">SELECT author, COUNT(books) AS books FROM books;</code></pre>
+          <pre class="fragment fade-down"><code class="language-sql">SELECT author, COUNT(books) AS books FROM books GROUP BY author;</code></pre>
+        </section>
+      </section>
+
+    </div>
+  </div>
+  <!-- reveal.js scripts -->
+  <script src="lib/js/head.min.js"></script>
+  <script src="js/reveal.js"></script>
+  <script>
+        Reveal.initialize({
+          transition: 'zoom',
+          height: '90%',
+          width: '70%',
+          controls: true,
+          progress: true,
+          history: true,
+          keyboard: true,
+          overview: true,
+          center: true,
+          dependencies: [
+            {
+              src: 'lib/js/classList.js', condition: function () {
+                return !document.body.classList;
+              }
+            },
+            { src: 'plugin/notes/notes.js', async: true },
+            { src: 'lib/prismjs/prism.js' },
+            { src: 'js/print.js' }
+          ]
+        });
+  </script>
+</body>
+
+</html>

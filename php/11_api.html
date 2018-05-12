@@ -1,0 +1,197 @@
+<html>
+<head>
+  <base href="https://jesperorb.github.io/revealjs/">
+  <!-- <base href="file:///Users/jesperorb/projects/revealjs/"> -->
+
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/theme/default.css">
+  <link rel="stylesheet" type="text/css" href="lib/prismjs/prism.css">
+  <link rel="stylesheet" type="text/css" href="lib/css/base16-oceanicnext.dark.css">
+  <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+  <meta name="description" content="API">
+  <meta name="author" content="jesperorb">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <title> API </title>
+  <style type="text/css">
+    pre[class*="language-"]{
+      margin: 3rem auto;
+    }
+  </style>
+  <script>
+  var link = document.createElement( 'link' );
+  link.rel = 'stylesheet';
+  link.type = 'text/css';
+  link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+  document.getElementsByTagName( 'head' )[0].appendChild( link );
+</script>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <section>
+          <section>
+            <h1><strong>API</strong></h1>
+            <p>Application Programmable Interface</p>
+          </section>
+          <section data-background="#1c2b34">
+            <pre><code class="language-js">//Funktionen innehåller vår implementation
+function getAllListItems(){
+  return document.getElementsByTagName('li');
+}</code></pre>
+          </section>
+          <section data-background="#1c2b34">
+            <pre><code class="language-js">//När vi kallar på den använder vi abstraktionen
+getAllListItems();</code></pre>
+            </section>
+            <section>
+              <h3>Abstraktion / Implementation</h3>
+              <p>Interfacet utåt, det vi döper våra funktioner till i princip</p>
+              <p class="fragment slide-down">Implementationen är själva koden som ligger i funktionen eller metoden. Den är undangömd.</p>
+              <p class="fragment slide-down">Vi behöver läsa ut vad abstraktionen gör och inte bry oss om implementationen.</p>
+            </section>
+            <section>
+              <h3><strong>Application Programmable Interface</strong></h3>
+              <p>Ett API är de funktioner/metoder som din applikation visar utåt publikt.</p>
+              <p class="fragment slide-down">Är de funktioner som vi interagerar med, vi behöver inte se koden bakom.</p>
+            </section>
+            <section>
+              <h3>Olika API:er</h3>
+              <p class="fragment slide-down">DOM API</p>
+              <p class="fragment slide-down">JavaScript API</p>
+            </section>
+            <section>
+              <h3>API i relation till webben</h3>
+              <p>Oftast pratar man om APIer som har endpoints där man hämtar data ifrån</p>
+              <p class="fragment slide-down">Servrar som exponerar URLer där man kan hämta enbart data ifrån och inte hemsidor.</p>
+              <p class="fragment slide-down">Oftat får man tillbaka informationen i form av <em>JSON</em></p>
+            </section>
+            <section data-background="#1c2b34">
+<pre><code class="language-http">GET HTTP/1.1
+Host: https://localhost:3000/users</code></pre>
+<pre><code class="language-json">[
+  {
+    "id": "1",
+    "name": "User1"
+  }
+]</code></pre>
+            </section>
+            <section>
+              <h3>Web API</h3>
+              <p>Skicka och hämta data via HTTP-protokollet med enkla medel</p>
+              <p>GET / POST / PATCH / DELETE</p>
+            </section>
+            <section>
+              <h3>ReST API</h3>
+              <p><em>Representational State Transfer</em></p>
+              <p>Servern bestämmer vad som kan skickas ut. Användaren behöver i princip bara gå till URLen för att hämta informationen.</p>
+              <p>Vi som användare behöver inte känna till strukturen av APIt, bara hur vi ska komma åt den.</p>
+            </section>
+            <section>
+              <h3>Öppna APIer</h3>
+              <p>Internt använder alla sidor sitt eget API för att manipulera data</p>
+              <p class="fragment slide-down">Vissa företag väljer att göra denna data publik och öppna sina endpoints för externa användare.</p>
+            </section>
+            <section>
+              <h3>GET All users</h3>
+              <p>Alla moderna APIer har följande upplägg:</p>
+              <p class="fragment slide-down"><strong>GET</strong>: https://localhost:3000/users</p>
+              <p class="fragment slide-down">Hämtar samtliga användare</p>
+              <p class="fragment slide-down">Det som returneras är nästan alltid <em>JSON</em></p>
+            </section>
+            <section>
+              <h3>Create a new user</h3>
+              <p><strong>POST</strong>: https://localhost:3000/users</p>
+              <p>Samma url men metoden är annorlunda</p>
+              <p>Vi indikerar att vi ska skicka med information till servers med POST</p>
+            </section>
+            <section data-background="#1c2b34">
+              <pre><code class="language-http">GET HTTP/1.1
+Host: https://localhost:3000/users</code></pre>
+              <pre><code class="language-json">[
+  {
+    "name": "Gurt"
+  },
+  {
+    "name": "Flurt"
+  }
+]</code></pre>
+            </section>
+            <section data-background="#1c2b34">
+              <pre><code class="language-http">GET HTTP/1.1
+Host: https://localhost:3000/users
+name=Kurt</code></pre>
+<pre><code class="language-json">{
+  "name": "Kurt"
+}</code></pre>
+            <p>Post-request brukar alltid returnera ett värde som visa det som lagrats</p>
+            </section>
+            <section data-background="#1c2b34"><pre><code class="hljs">GET /users</code></pre>
+            <pre><code class="hljs json">[
+  {
+    "name": "Gurt"
+  },
+  {
+    "name": "Flurt"
+  },
+  {
+    "name": "Kurt"
+  }
+]</code></pre>
+            </section>
+            <section>
+              <h3>Enskilda resurser</h3>
+              <pre><code class="language-http">GET HTTP/1.1
+Host: https://localhost:3000/users/12</code></pre>
+              <p>URLen indikerar ett specifkt id: en användare</p>
+              <p>12 är i det här fallet ett unikt id för användaren</p>
+            </section>
+            <section>
+              <pre><code class="language-http">DELETE HTTP/1.1
+Host: https://localhost:3000/users/12</code></pre>
+              <p>Samma URL men metoden är annorlunda</p>
+              <p>Användare nr 12 ska bort!</p>
+            </section>
+            <section>
+              <h3>Enskilda resurser</h3>
+              <pre><code class="language-http">PATCH HTTP/1.1
+Host: https://localhost:3000/users/12
+name=Flurty</code></pre>
+              <p>Samma URL men metoden är annorlunda</p>
+              <p>Användare nr 12 ska ändras, få namnet Flurty</p>
+            </section>
+            <section>
+              <h3>GET / POST / PATCH / DELETE</h3>
+              <p>Med <strong>POST</strong> och <strong>PATCH</strong> måste vi skicka med ny information</p>
+              <p>Med <strong>GET</strong> och <strong>DELETE</strong> behöver vi inte skicka med ny information eftersom vi inte ska modifiera</p>
+              <p class="fragment slide-down"><strong>GET</strong> är den enda "säkra" metoden</p>
+            </section>
+
+  </div>
+</div>
+<!-- reveal.js scripts -->
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.js"></script>
+<script>
+Reveal.initialize({
+  transition: 'zoom',
+  height: '90%',
+  width: '70%',
+  controls: true,
+  progress: true,
+  history: true,
+  keyboard: true,
+  overview: true,
+  center: true,
+  dependencies: [
+  { src: 'lib/js/classList.js',condition: function (){
+    return !document.body.classList;}},
+    { src: 'plugin/notes/notes.js', async: true },
+    {src : 'lib/prismjs/prism.js'},
+    {src : 'js/print.js'}
+    ]
+  });
+</script>
+</body>
+</html>

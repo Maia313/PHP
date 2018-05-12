@@ -1,0 +1,267 @@
+<html>
+<head>
+  <base href="https://jesperorb.github.io/revealjs/">
+  <!-- <base href="file:///Users/jesperorb/projects/revealjs/"> -->
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/theme/default.css">
+  <link rel="stylesheet" type="text/css" href="lib/prismjs/prism.css">
+  <link rel="stylesheet" type="text/css" href="lib/css/base16-oceanicnext.dark.css">
+  <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+  <meta name="description" content="Object Oriented Programming">
+  <meta name="author" content="jesperorb">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <title> Object Oriented Programming </title>
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+  <style type="text/css">
+    .reveal section img{
+      background:none; box-shadow: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <section>
+        <section>
+          <h1><strong>Inheritance</strong></h1>
+        </section>
+      </section>
+      
+      <!-- Repetition -->
+
+      <section>
+        <section>
+          <h1><strong>PHP Classes</strong></h1>
+        </section>
+        <section>
+          <pre><code class="language-php">class Elephant
+{
+  public $name;
+
+  public function __construct($name)
+  {
+    $this->name = $name;
+  }
+}</code></pre>
+        <p class="fragment fade-down"><em>$this-></em> refererar till det skapade objektets egenskaper</p>
+        </section>
+        <section>
+          <h3><em>Access</em></h3>
+          <p><strong>Public</strong>: default, öppet för alla</p>
+          <p><strong>Private</strong>: kan enbart användas av klassen</p>
+          <p><strong>Protected</strong>: kan användas av klassen och subklasser</p>
+        </section>
+        <section>
+          <p>Statiska egenskaper och metoder tillhör klassen</p>
+          <pre><code class="language-php">class Elephant
+{
+
+  public static speak()
+  {
+    echo 'ERUUUEEH!';
+  }
+}</code></pre>
+        <pre><code class="language-php">Elephant::speak();</code></pre>
+        </section><section>
+          <p><code><em>Self</em></code> pekar på den statiska egenskapen inifrån själva klassen</p>
+          <pre><code class="language-php">class Elephant
+{
+  public static $name = "Hathi";
+  public static speak()
+  {
+    echo Self::$name; //Self is ref to class
+  }
+}</code></pre>
+        <pre><code class="language-php">Elephant::speak();</code></pre>
+        </section>
+      </section>
+
+      <section>
+        <section>
+          <h1><em>Inheritance</em></h1>
+          <p>Arv</p>
+        </section>
+        <section>
+          <blockquote>
+            Arv är när en klass utgår från en annan. Om den ena klassen är ett specialfall av den andra, så är det naturligt att låta dem ärva från varandra.
+          </blockquote>
+          <p class="fragment fade-down"><code>elephant (specifik) <em>→</em> mammal (mer allmän) <br/><em>→</em> animal (mest allmän)</code></p>
+        </section>
+        <section>
+          <p class="fragment fade-down"><code>elephant (specifik) <em>→</em> mammal (mer allmän) <br/><em>→</em> animal (mest allmän)</code></p>
+          <p class="fragment fade-down">elephant ärver av mammal som ärver av animal</p>
+          <p class="fragment fade-down">Allt som mammal kan kan även elephant</p>
+        </section>
+        <section>
+          <pre><code class="language-php">class Animal
+{
+  public function speak()
+  {
+    echo "I change shapes just to hide in this place";
+  }
+}
+class Elephant extends Animal{}</code></pre>
+        <p><code>Nyckelord: <em>extends</em></code></p>
+        </section>
+        <section>
+          <h3><em>Override</em></h3>
+          <pre><code class="language-php">class Animal {
+  public function makeNoise() { echo '...'; }
+}
+class Pig extends Animal {
+  public function makeNoise() { echo 'oink'; }
+}
+class Cat extends Animal {
+  public function makeNoise() { echo 'meow'; }
+}</code></pre>
+        <p class="fragment fade-down">Vi skriver över <em>basklassens</em> metoder </p>
+        </section>
+        <section>
+          <pre><code class="language-php">class Vehicle {
+  public $numberOfWheels;
+}
+
+class Car extends Vehicle {
+  public function __construct() {
+    $this->numberOfWheels = 4;
+  }
+}</code></pre>
+        <p class="fragment fade-down"><code><em>Vehicle</em> har redan <code>numberOfWheels</code> men denna variabel är olika beroende på vilken typ av Vehicle</code></p>
+        </section>
+        <section>
+          <p>Klassen Car ärver från Vehicle. Man säger ibland att Car <em>utökar</em> Vehicle.</p>
+<p>Klassen Vehicle kallas för en <strong>basklass</strong> till Car.</p>
+Klassen Car kallas för en <strong>subklass</strong> till Vehicle.
+
+<p class="fragment fade-down"></p>Engelska: inherit, extend, base class, sub class.
+        </section>
+        <section>
+          <h3><em>Override</em> parent</h3>
+          <pre><code class="language-php">class Vehicle {
+  public function goTo($destination) {}
+}
+class Car extends Vehicle {
+  public function goTo($destination) {
+    echo "Åker bil till $destination &lt;br&gt;";
+    parent::goTo($destination);
+  }
+}</code></pre>
+          <p class="fragment fade-down"><code><em>parent::</em></code> kallar på basklassen</p>
+        </section>
+        <section>
+          <h3>Protected</h3>
+          <p>Vi kan även använda <em>protected</em></p>
+          <p class="fragment fade-down">Egenskapen/metoden kan kommas åt av alla subklasser</p>
+          <p class="fragment fade-down">Men inte av andra klasser eller utanför klasserna</p>
+        </section>
+        <section data-transition="convex none">
+          <pre><code class="language-php">class A {
+  public $p1;
+  protected $p2;
+  private $p3;
+}
+class B extends A {
+  public function whatWillHappen() {
+    echo $this->p1;  // 1
+    echo $this->p2;  // 2
+    echo $this->p3;  // 3
+  }
+}</code></pre>
+        </section>
+                <section data-transition="none convex">
+          <pre><code class="language-php">class A {
+  public $p1;
+  protected $p2;
+  private $p3;
+}
+class B extends A {
+  public function whatWillHappen() {
+    echo $this->p1;  // public! open for everyone!
+    echo $this->p2;  // protected! Still open for B
+    echo $this->p3;  // private! FATAL ERROR
+  }
+}</code></pre>
+        </section>
+      </section>
+      <section>
+        <section>
+          <h1><strong>Abstract / Interface</strong></h1>
+        </section>
+        <section>
+          <h3><em>Abstract</em></h3>
+          <p>Ibland är ingenting logiskt</p>
+          <p class="fragment fade-down">Klassen <code><em>Animal</em></code> behöver ju egentligen aldrig implementeras</p>
+          <p class="fragment fade-down">Det finns inget random <em>Animal</em></p>
+          <p class="fragment fade-down">Ibland vill man bara ha klasser som referens eller som ett kontrakt: <em>Abstract</em></p>
+        </section>
+        <section>
+          <pre><code class="language-php">abstract class Animal {
+  abstract public function makeNoise();
+}
+class Cat extends Animal {
+  public function makeNoise() { echo 'meow'; }
+}
+class Dog extends Animal { }  //FATAL ERROR!</code></pre>
+        <p class="fragment fade-down">Det är upp till subklassen att implementera funktionen</p>
+        </section>
+        <section>
+          <h3><em>Interface</em></h3>
+          <p>Liknande med <em>interface</em>: ett kontrakt</p>
+          <p class="fragment fade-down">En klass behöver inte vara en subklass men ska ändå uppnå vissa kriterer och ärva vissa drag</p>
+          <p class="fragment fade-down">Vi kan då implementera ett <em>Interface</em></p>
+        </section>
+        <section>
+          <pre><code class="language-php">interface CanJumpInterface {
+  public function jump();
+}</code></pre>
+        <pre class="fragmen fade-down"><code class="language-php">class Cat implements CanJumpInterface {
+  public function jump() { /**/ }  // ok
+}</code></pre>
+          <pre class="fragment fade-down"><code class="language-php">class Human implements CanJumpInterface {
+  public function jump() { /**/ }  // ok
+}</code></pre>
+        </section>
+        <section>
+          <h3><em>Abstract</em> / <strong>Interface</strong></h3>
+          <p>Det jobbiga är att vi skriver inte någon faktiskt kod</p>
+          <p class="fragment fade-down">Vi säger bara att vissa klasser <em>MÅSTE</em> ha viss kod</p>
+          <p class="fragment fade-down">Vi underlättar för andra och för oss själva: genom att skapa interfaces och abstrakta klasser definierar vi vad en viss klass kan göra.</p>
+        </section>
+      </section>
+
+
+    </div>
+  </div>
+  <!-- reveal.js scripts -->
+  <script src="lib/js/head.min.js"></script>
+  <script src="js/reveal.js"></script>
+  <script>
+    Reveal.initialize({
+      transition: 'zoom',
+      height: '90%',
+      width: '70%',
+      controls: true,
+      progress: true,
+      history: true,
+      keyboard: true,
+      overview: true,
+      center: true,
+      dependencies: [
+      { src: 'lib/js/classList.js',condition: function (){
+        return !document.body.classList;}},
+        { src: 'plugin/notes/notes.js', async: true },
+        {src : 'lib/prismjs/prism.js'},
+        {src : 'js/print.js'}
+        ]
+      });
+    </script>
+  </body>
+  </html>

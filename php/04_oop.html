@@ -1,0 +1,276 @@
+<html>
+<head>
+  <base href="https://jesperorb.github.io/revealjs/">
+  <!-- <base href="file:///Users/jesperorb/projects/revealjs/"> -->
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/theme/default.css">
+  <link rel="stylesheet" type="text/css" href="lib/prismjs/prism.css">
+  <link rel="stylesheet" type="text/css" href="lib/css/base16-oceanicnext.dark.css">
+  <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+  <meta name="description" content="Object Oriented Programming">
+  <meta name="author" content="jesperorb">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <title> Object Oriented Programming </title>
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+  <style type="text/css">
+    .reveal section img{
+      background:none; box-shadow: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- INTRO SLIDE -->
+      <section>
+        <section>
+          <h1><strong>Object Oriented PHP</strong></h1>
+        </section>
+      </section>
+      
+      <!-- CONTENT -->
+
+      <section>
+        <section>
+          <h1><em>Objects</em></h1>
+        </section>
+        <section>
+          <h3><strong>PHP: Objects instantiated from classes</strong></h3>
+          <p>När vi vill ha samma beteende för en rad olika saker</p>
+          <p class="fragment fade-down">Vi är alla människor, men vi har olika namn, ålder etc. Alla produkter har olika pris men vi har ändå samlingsnamnet "produkt"</p>
+        </section>
+        <section>
+          <pre><code class="language-php">$products = array(
+  array(
+    "name"  => "A thing",
+    "price" => "500"
+  ), 
+  array(
+    "name"  => "Another",
+    "price" => "1000"
+  )
+);</code></pre>
+        <p class="fragment fade-down">Upprepande samt vi kan lätt skriva fel</p>
+        </section>
+        <section>
+          <p class="fragment fade-down">Struktur - var sak på sin plats</p>
+          <p class="fragment fade-down">Modularitet - återanvänd kod</p>
+          <p class="fragment fade-down">DRY - mindre upprepning</p>
+          <img class="fragment fade-down" src="https://media.giphy.com/media/dlCHE6WxIpwli/giphy.gif" alt="Elephantys!">
+        </section>
+      </section>
+      <section>
+          <section>
+            <h3><strong>Objects</strong></h3>
+          <blockquote>When talking about objects, you refer to variables belonging to these objects as properties (or attributes or fields), and functions are called methods.</blockquote>
+          </section>
+          <section>
+            <p>Varje gång man använder <code><em>new</em></code> så skapar man ett nytt objekt utifrån en klass</p>
+            <pre><code class="language-php">$my_taco = new Taco;</code></pre>
+          </section>
+          <section>
+            <p>Klassen är som en ritning över hur objektet ska fungera</p>
+            <p class="fragment fade-down">Objekt är det som skapas utifrån ritningen</p>
+            <img class="fragment fade-down" style="max-height: 400px" src="https://img00.deviantart.net/4d53/i/2013/068/6/a/x_wing_blue_print_by_chaoshour-d5wn4fs.jpg">
+          </section>
+          <section>
+            <pre><code class="language-php">class Elephant 
+{
+  //empty class
+}</code></pre>
+          <pre><code class="language-php">$hathi = new Elephant;</code></pre>
+          <p class="fragment fade-down">I <code><em>$hathi</em></code> har vi skapat ett nytt objekt utifrån klassen</p>
+          <p class="fragment fade-down">Behövs inga paranteser om klassen inte tar några argument när den skapas.</p>
+          </section>
+          <section>
+            <h3><em>Class Method</em></h3>
+            <p class="fragment fade-down">En funktion som är bunden till varje objekt</p>
+            <pre><code class="language-php">&lt;?php
+class Elephant
+{
+  function speak(){
+    echo "ERRRRUUUUH!!!!";
+  }
+}</code></pre>
+          </section>
+          <section>
+            <h3><em>Instantiering</em></h3>
+            <p>Vi måste skapa ett objekt för att kunna använda metoderna i klassen</p>
+            <pre><code class="language-php">&lt;?php
+$hathi = new Elephant; //new keyword
+$hathi->speak();  //ERRRRUUUUH!!!!</code></pre>
+          <p class="fragment fade-down"><strong>-></strong> används för att komma åt egenskaper och metoder i objekt</p>
+          </section>
+          <section>
+            <p><em>Properties</em></p>
+            <pre ><code class="language-php">&lt;?php
+class Elephant
+{
+  public $name = "Hathi";
+  function speak(){
+    echo "ERRRRUUUUH!!!!";
+  }
+}</code></pre>
+          <pre class="fragment fade-down"><code class="language-php">$hathi = new Elephant;
+echo $hathi->name;</code></pre>
+          </section>
+          <section>
+            <p><code><em>public</em></code> har med åtkomst att göra.</p>
+            <p class="fragment fade-down">Vi kan även sätta: <code><em>private</em></code> eller <code><em>protected</em></code></p>
+            <p class="fragment fade-down">Vi ska för det mesta använda private properties och public functions i slutändan</p>
+          </section>
+          <section>
+            <pre><code class="language-php">&lt;?php
+class Elephant              //Class
+{
+  public $name = "Hathi";   //property
+  function speak(){         //method
+    echo "ERRRRUUUUH!!!!";
+  }
+}</code></pre>
+          <pre class="fragment fade-down"><code class="language-php">//Instansiate new object from class
+$hathi = new Elephant;
+echo $hathi->name;      //Use class methods</code></pre>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h1><code><strong>$this</strong></code></h1>
+          </section>
+          <section>
+            <p>Nyckelordet <code><em>$this</em></code> pekar på det egna objektet</p>
+            <pre><code class="language-php">$hathi = new Elephant;
+$mowgli = new Elephant;</code></pre>
+            <p class="fragment fade-down">Hathi & Mowgli är två olika elefanter, två olika <code><strong>$this</strong></code></p>
+            <p class="fragment fade-down">De delar dock gemensamma egenskaper som inte är kopplade till <code><strong>$this</strong></code>: <code>speak();</code></p>
+          </section>
+          <section>
+            <pre ><code class="language-php">&lt;?php
+class Elephant
+{
+  public $name = "Hathi";
+  function speak(){
+    echo $this->name;
+  }
+}</code></pre>
+          <pre class="fragment fade-down"><code class="language-php">$hathi = new Elephant;
+$hathi->speak();   //"Hathi"</code></pre>
+        </section>
+          <section>
+            <pre ><code class="language-php">&lt;?php
+class Elephant
+{
+  public $name = "Hathi";
+  function speak(){
+    echo $this->name;
+  }
+  function setName($new_name){
+    $this->name = $new_name;
+  }
+}</code></pre>
+          <pre class="fragment fade-down"><code class="language-php">$elephant = new Elephant;
+$elephant->speak();   //"Hathi"
+$elephant->setName("Mowgli");
+$elephant->speak()    //"Mowgli"</code></pre>
+        </section>
+      </section>
+
+        <!--STATIC -->
+        <section>
+          <section>
+            <h1><strong>Static</strong></h1>
+          </section>
+          <section>
+            <p>En metod kan vara bunden till klassen och inte till objektet.</p>
+            <p class="fragment fade-down">Metoden kan användas <em>utan att instatiera ett objekt</em></p>
+          </section>
+          <section>
+              <h3><strong>static</strong> keyword</h3>
+            <pre><code class="language-php">&lt;?php
+class Elephant
+{
+  static function speak()
+  {
+    echo "ERRUUH!";
+  }
+}</code></pre>
+          <pre class="fragment fade-down"><code class="language-php">&lt;?php
+Elephant::speak(); //'ERRUUH!'</code></pre> 
+          <p class="fragment fade-down">Kan tala utan instans</p>
+          </section>
+          <section>
+            <pre><code class="language-php">&lt;?php
+class Elephant
+{
+  static public $name = "Hathi";
+}</code></pre>
+          <pre class="fragment fade-down"><code class="language-php">&lt;?php
+Elephant::$name; //'Hathi'</code></pre>
+<p class="fragment fade-down">Kan ha ett namn utan instans och hör till klassen</p>
+          <p class="fragment fade-down">"Hathi" hör till alla elefanter, inte de enskilda elefanterna.</p>
+          </section>
+        </section>
+        <section>
+          <p><em>Konstruktor</em></p>
+          <pre><code class="language-php">class Elephant
+{
+  public $name;
+
+  public function __construct($name)
+  {
+    $this->name = $name;
+  }
+
+}</code></pre>
+        </section>
+        <section>
+          <pre><code class="language-js">$first = new Elephant("Hathi")</code></pre>
+          <pre><code class="language-js">$second = new Elephant("Mowgli")</code></pre>
+          <p class="fragment fade-down">Två olika elefanter med två olika <code>$this-></code></em> samt två olika namn</p>
+        </section>
+        <section>
+          <p><em>Använd klasser när du:</em></p>
+          <ul>
+            <li>Ska skapa flera objekt med likadant beteende</li>
+            <li>När du vill gruppera funktionalitet som hör ihop</li>
+            <li>När du upptäcker att du upprepar dig mycket</li>
+            <li>För att "säkra upp" din kod, mindre risk för att skriva fel</li>
+          </ul>
+        </section>
+
+    </div>
+  </div>
+  <!-- reveal.js scripts -->
+  <script src="lib/js/head.min.js"></script>
+  <script src="js/reveal.js"></script>
+  <script>
+    Reveal.initialize({
+      transition: 'zoom',
+      height: '90%',
+      width: '70%',
+      controls: true,
+      progress: true,
+      history: true,
+      keyboard: true,
+      overview: true,
+      center: true,
+      dependencies: [
+      { src: 'lib/js/classList.js',condition: function (){
+        return !document.body.classList;}},
+        { src: 'plugin/notes/notes.js', async: true },
+        {src : 'lib/prismjs/prism.js'},
+        {src : 'js/print.js'}
+        ]
+      });
+    </script>
+  </body>
+  </html>

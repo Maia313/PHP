@@ -1,0 +1,244 @@
+<html>
+<head>
+  <base href="https://jesperorb.github.io/revealjs/">
+  <!-- <base href="file:///Users/jesperorb/projects/revealjs/"> -->
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/theme/default.css">
+  <link rel="stylesheet" type="text/css" href="lib/prismjs/prism.css">
+  <link rel="stylesheet" type="text/css" href="lib/css/base16-oceanicnext.dark.css">
+  <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+  <meta name="description" content="SQL">
+  <meta name="author" content="jesperorb">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <title> SQL </title>
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+
+      <section>
+        
+        <section>
+          <h1><strong>Auth & Sessions</strong></h1>
+        </section>
+      </section>
+
+
+      <!-- INTRO SLIDE -->
+      <section>
+          <section>
+            <h1><strong>$_SESSION</strong></h1>
+          </section>
+          <section>
+            <h1>Superglobals</h1>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Superman_S_symbol.svg/1280px-Superman_S_symbol.svg.png" alt="Super Session">
+          </section>
+          <section>
+            <h5><em>Superglobals</em></h5>
+            <ul>
+              <li>$GLOBALS</li>
+                <li>$_SERVER</li>
+                <li><span class="fragment highlight-red">$_GET</span></li>
+                <li><span class="fragment highlight-red">$_POST</span></li>
+                <li>$_FILES</li>
+                <li>$_COOKIE</li>
+                <li><span class="fragment highlight-red">$_SESSION</span></li>
+                <li>$_REQUEST</li>
+                <li>$_ENV</li>
+            </ul>
+          </section>
+          <section>
+            <p><em>$_GET</em> för att få URL-query</p>
+            <pre><code class="language-http">https://mysite.com?name=jesper&ok=whatev</code></pre>
+            <pre><code class="language-php">var_dump($_GET) // { name: jesper, ok: whatev }</code></pre>
+          </section>
+          <section>
+            <p><em>$_POST</em> för att hämta data från <code>forms</code> </p>
+            <pre><code class="language-html">&lt;form action=&quot;post.php&quot; method=&quot;POST&quot;&gt;
+  &lt;input type=&quot;text&quot; name=&quot;name &quot; value="jesper"&gt;
+  &lt;input type=&quot;text&quot; name=&quot;ok&quot; value="whatev"&gt;
+  &lt;input type=&quot;submit&quot;&gt;
+&lt;/form&gt;</code></pre>
+            <pre><code class="language-php">var_dump($_POST) // { name: jesper, ok: whatev }</code></pre>
+            <p class="fragment fade-down"><code>form action, form method och name är viktiga</code></p>
+          </section>
+          <section>
+            <h3><em><code>$_SESSION</code></em></h3>
+            <p>I sessionsvariabeln kan vi lagra information som ska vara under en längre tid</p>
+            <p class="fragment fade-down">En session håller data när du går till en annan sida.</p>
+            <p class="fragment fade-down">Lagras på servern och i browsern men inte i databasen.</p>
+            <pre class="fragment fade-down"><code class="language-php">$_SESSION['name'] = "Jesper";</code></pre>
+          </section>
+          <section>
+            <p>Varje gång du ska köra en session måste du se till så att sessionen är startad</p>
+            <pre><code class="language-php">session_start();</code></pre>
+            <pre><code class="language-php">session_destroy();</code></pre>
+            <p class="fragment fade-down">En session kan t.ex. vara <strong>en inloggning</strong></p>
+          </section>
+          <section>
+            <p class="fragment fade-down">Vi ska inte starta sessionen om den redan är startad. </p>
+            <pre><code class="language-php">if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}</code></pre>
+          <p class="fragment fade-down"><em>Lägg <code>session_start()</code></em> längst upp i dokumentet</p>
+          </section>
+          <section>
+            <p>Vill vi ta bort en variabel i session</p>
+            <pre><code class="language-php">unset($_SESSION["username"]);</code></pre>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h1><em>Signin / Register</em></h1>
+          </section>
+          <section>
+            <p><code><strong>$_SESSION</strong></code> används främst i kombination med login / logout men man kan lagra vad som helst i arrayen</p>
+            <p class="fragment fade-down">Vi vet hur vi kan lagra en användare/vad som helst i SQL</p>
+            <pre class="fragment fade-down"><code class="language-sql">INSERT INTO users (username, password)
+VALUES (zero_cool, strongpass2000)</code></pre>
+          </section>
+          <section>
+            <p>Vad är felet? 🤡</p>
+            <pre><code class="language-sql">INSER INTO users (username, password)
+VALUES (zero_cool, strongpass2000)</code></pre>
+<p class="fragment fade-down">Tips: <em>säkerhet</em></p>
+          </section>
+          <section>
+            <p>Vi måste kryptera våra lösenord</p>
+            <p class="fragment fade-down">Det är inbyggt 🤖</p>
+            <pre class="fragment fade-down"><code class="language-php">$hash = password_hash("strongpass2000", PASSWORD_BCRYPT)</code></pre>
+            <p class="fragment fade-down"><code><em>$hash</em></code> innehåller en hashad version av vårt lösenord</p>
+          </section>
+          <section>
+            <p>Men vi måste kunna avkryptera vårt lösenord</p>
+            <p class="fragment fade-down">Det är inbyggt 🤖</p>
+            <pre class="fragment fade-down"><code class="language-php">$hash = password_hash("strongpass2000", PASSWORD_BCRYPT)</code></pre>
+            <pre class="fragment fade-down"><code class="language-php">if (password_verify('strongpass2000', $hash)) { 
+    echo "Yes! It's YOU!"; 
+} else { 
+    echo "Liar"; 
+} </code></pre>
+          <p class="fragment fade-down"><code><em>password_verify</em></code> returnerar <code>true</code> eller <code>false</code> baserat på om hashen stämmer överens med lösenordet</p>
+          </section>
+          <section>
+            <p>Det jobbiga är flödet. Hur ska vi skicka informationen?</p>
+            <p class="fragment fade-down">Var ska användaren sparas?</p>
+            <p class="fragment fade-down">Var ska felmeddelanden sparas?</p>
+          </section>
+        </section>
+        <section>
+        <section>
+          <h1>
+            <strong>
+              Cookies & Sessions
+            </strong>
+          </h1>
+        </section>
+        <section>
+          <p><strong>Sessions</strong></p>
+          <p class="fragment fade-down">I princip en textfil som sparas för varje session på datorn/servern</p>
+          <p class="fragment fade-down">Varje session är oftast inställd på att förstöras när webbläsarn stängs ner</p>
+          <pre class="fragment fade-down"><code class="language-file">/Applications/MAMP/tmp/php</code></pre>
+          <p class="fragment fade-down">Varför?</p>
+        </section>
+        <section>
+          <p><strong>Scenario</strong></p>
+          <p class="fragment fade-down">2 miljoner inloggade användare</p>
+          <p class="fragment fade-down">Inloggad på 3 olika devices: mobil, hem, jobb</p>
+          <p class="fragment fade-down"><em>6 miljoner sessions</em></p>
+          <p class="fragment fade-down">Lagrade på <strong>vår server</strong>, saktar ner och tar plats</p>
+        </section>
+        <section>
+          <p><strong>Fördelar</strong></p>
+          <p class="fragment fade-down">Ökad säkerhet av att lagra i backend</p>
+          <p class="fragment fade-down">Sparar vi det i webbläsaren är det lättare att stjäla/hacka</p>
+          <p class="fragment fade-down">Lätt att koda då vi alltid känner till vad som ligger i <code><em>$_SESSION</em></code></p>
+        </section>
+        <section>
+          <p><em>Förläng tiden på en session</em></p>
+          <pre><code class="language-php">session_set_cookie_params(3600);</code></pre>
+          <p class="fragment fade-down">Ska sätta längden på en session till en timme oavsett vad användaren gör</p>
+        </section>
+        <section>
+          <pre><code class="language-php">ini_set('session.cookie_lifetime', 3600);
+ini_set('session.gc_maxlifetime', 3600);</code></pre> 
+          <p class="fragment fade-down">Alternativt sätta längden i <code><em>php.ini</em></code></p>
+        </section>
+        <section>
+          <h2><strong>
+            <code>Cookies</code>
+          </strong></h2>
+        </section>
+        <section>
+          <p><strong>Alternativet</strong></p>
+          <p class="fragment fade-down">Cookies lagras i användarens webbläsare</p>
+          <p class="fragment fade-down">Skickas med i varje förfrågan till servern så att servern vet vem som gör förfrågan</p>
+          <p class="fragment fade-down">Vi kan spara vilken information vi vill i <code><em>cookies</em></code></p>
+          <pre class="fragment fade-down"><code class="language-php">$_COOKIE</code></pre>
+        </section>
+        <section>
+          <pre><code class="language-php">$_SESSION["username"];
+$_COOKIE["username"];
+$_POST["username"];
+$_GET["username"];</code></pre>
+          <p class="fragment fade-down">Varje superglobal är en <code><em>associative array</em>: namn => värde</code></p>
+        </section>
+        <section>
+          <p><strong>Sätta cookies</strong></p>
+          <blockquote>setcookie() defines a cookie to be sent along with the rest of the HTTP headers.</blockquote>
+          <pre><code class="language-php">setcookie("name", "value", $time, "path", "domain", $httponly);</code></pre> 
+          <pre><code class="language-php">setcookie("username", "zero_cool", time() + 3600, "/", "localhost", 1);</code></pre> 
+          <p class="fragment fade-down">Sätter en cookie med användarnamn som håller i 1h</p>
+        </section>
+        <section>
+          <p><code><em>fetch</em></code> är inställt på att INTE skicka med cookies</p>
+          <pre><code class="language-js">fetch('fetch_something.php')</code></pre>
+          <p>kräver fetchen ovan att du måste autentisera dig via cookies så kommer det att misslyckas</p>
+          <pre><code class="language-js">fetch('fetch_something.php',{
+            credentials: 'include'
+          })</code></pre>
+          <p class="fragment fade-down">Använd antingen <code><em>include</em></code> eller <code><em>same-origin</em></code></p>
+        </section>
+      </section>
+
+      <section>
+        <p>Det finns inga övningar till dagens innehåll bara instruktioner för att kunna implementera koden i ditt eget projekt.</p>
+      </section>
+
+    </div>
+  </div>
+    <!-- reveal.js scripts -->
+  <script src="lib/js/head.min.js"></script>
+  <script src="js/reveal.js"></script>
+  <script>
+    Reveal.initialize({
+      transition: 'zoom',
+      height: '90%',
+      width: '70%',
+      controls: true,
+      progress: true,
+      history: true,
+      keyboard: true,
+      overview: true,
+      center: true,
+      dependencies: [
+      { src: 'lib/js/classList.js',condition: function (){
+        return !document.body.classList;}},
+        { src: 'plugin/notes/notes.js', async: true },
+        {src : 'lib/prismjs/prism.js'},
+        {src : 'js/print.js'}
+        ]
+      });
+    </script>
+</body>
+</html>
